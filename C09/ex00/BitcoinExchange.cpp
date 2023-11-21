@@ -170,7 +170,7 @@ if (infile.fail())
 	return (false);
 }
 getline (infile, line);
-if (line.compare("data | value") == 0)
+if (line.compare("date | value") != 0)
 {
 	std::cout << "Error: Invalid File Format" << std::endl;
 	infile.close();

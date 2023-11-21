@@ -59,46 +59,23 @@ void PmergeMe::merg_vector(std::vector<int>& vec, int left, int mid, int right)
     }
 }
 
-void PmergeMe::merg_deque(std::deque<int>& deq, int left, int mid, int right) 
+void PmergeMe::merg_list(std::list<int>& left, std::list<int>& right, std::list<int>& result) 
 {
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+     std::list<int>::iterator leftIter = left.begin();
+    std::list<int>::iterator rightIter = right.begin();
 
-    std::deque<int> leftDeq(n1);
-    std::deque<int> rightDeq(n2);
-
-    for (int i = 0; i < n1; i++) {
-        leftDeq[i] = deq[left + i];
-    }
-
-    for (int i = 0; i < n2; i++) {
-        rightDeq[i] = deq[mid + 1 + i];
-    }
-
-    int i = 0, j = 0, k = left;
-
-    while (i < n1 && j < n2) {
-        if (leftDeq[i] <= rightDeq[j]) {
-            deq[k] = leftDeq[i];
-            i++;
+    while (leftIter != left.end() && rightIter != right.end()) {
+        if (*leftIter < *rightIter) {
+            result.push_back(*leftIter);
+            leftIter++;
         } else {
-            deq[k] = rightDeq[j];
-            j++;
+            result.push_back(*rightIter);
+            rightIter++;
         }
-        k++;
     }
 
-    while (i < n1) {
-        deq[k] = leftDeq[i];
-        i++;
-        k++;
-    }
-
-    while (j < n2) {
-        deq[k] = rightDeq[j];
-        j++;
-        k++;
-    }
+    result.insert(result.end(), leftIter, left.end());
+    result.insert(result.end(), rightIter, right.end());
 }
 
 void PmergeMe::merg_sort_vector(std::vector<int>& vec, int l, int r)
@@ -113,15 +90,27 @@ void PmergeMe::merg_sort_vector(std::vector<int>& vec, int l, int r)
 		merg_vector(vec, l, m, r);
 	}
 }
-void PmergeMe::merg_sort_deque(std::deque<int>& deq, int l, int r)
+void PmergeMe::merg_sort_list(std::list<int>& lst) 
 {
-    if (l < r)
-	{
-		int m = l + (r - l) / 2;
-        
-		merg_sort_deque(deq, l, m);
-		merg_sort_deque(deq, m + 1, r);
+    if (lst.size() <= 1) {
+        return;
+    }
 
-		merg_deque(deq, l, m, r);
-	}
+    std::list<int> left, right;
+    int middle = lst.size() / 2;
+
+    std::list<int>::iterator it = lst.begin();
+    for (int i = 0; i < middle; i++) {
+        left.push_back(*it);
+        it++;
+    }
+
+    for (; it != lst.end(); it++) {
+        right.push_back(*it);
+    }
+
+    merg_sort_list(left);
+    merg_sort_list(right);
+    lst.clear();
+    merg_list(left, right, lst);
 }

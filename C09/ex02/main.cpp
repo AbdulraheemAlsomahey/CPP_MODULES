@@ -16,29 +16,6 @@ int main(int argc, char* argv[])
         }
         i++;
     }
-//=================deque======================
-
-    std::deque<int> dequeInput;
-    for (int i = 1; i < argc; i++) {
-        dequeInput.push_back(atoi(argv[i]));
-    }
-    std::cout << "Before : ";
-    for (size_t i = 0; i < dequeInput.size(); i++){
-       std::cout << dequeInput[i] << " ";
-    }
-    std::cout << std::endl;
-
-    clock_t start = clock();   
-    p.merg_sort_deque(dequeInput, 0, dequeInput.size() - 1);      			// Sort the sequence using mergesort
-    clock_t end = clock();
-
-    double duration = (static_cast<double>(end - start) / CLOCKS_PER_SEC) * 1e6; // Convert to microseconds * 486
-
-    std::cout << "\nAfter : ";
-    for (size_t i = 0; i < dequeInput.size(); i++){
-       std::cout << dequeInput[i] << " ";
-    }
-    std::cout << "\nTime to process a range of " << dequeInput.size() << " elements with std::deque  : " << duration << " us" <<std::endl;
 //=================vector======================
 
     std::vector<int> vectorInput;
@@ -46,11 +23,34 @@ int main(int argc, char* argv[])
         vectorInput.push_back(atoi(argv[i]));
     }
 
+    std::cout << "Before : ";
+    for (size_t i = 0; i < vectorInput.size(); i++){
+       std::cout << vectorInput[i] << " ";
+    }
+
     clock_t s = clock();
     p.merg_sort_vector(vectorInput, 0, vectorInput.size() - 1); 
     clock_t d = clock();
 
+    std::cout << "\nAfter : ";
+    for (size_t i = 0; i < vectorInput.size(); i++){
+       std::cout << vectorInput[i] << " ";
+    }
     double time = (static_cast<double>(d - s) / CLOCKS_PER_SEC) * 1e6; // Convert to microseconds
-    std::cout << "Time to process a range of  " << vectorInput.size() << " elements with std::vector  : " << time << " us" <<std::endl;
+    std::cout <<  std::endl << "Time to process a range of  " << vectorInput.size() << " elements with std::vector  : " << time << " us";
+
+//=================list======================
+    std::list<int> lst;
+    for (int i = 1; i < argc; i++) {
+        lst.push_back(atoi(argv[i]));
+    }
+    clock_t start = clock();   
+    p.merg_sort_list(lst); 
+    clock_t end = clock();
+
+    double duration = (static_cast<double>(end - start) / CLOCKS_PER_SEC) * 1e6; // Convert to microsecond
+    std::cout << "\nTime to process a range of " << lst.size() << " elements with std::list  : " << duration << " us" <<std::endl;
     return 0;
 }
+
+

@@ -20,6 +20,8 @@ void	identify(Base *p)
 		std::cout << "The Class is B" << std::endl;
 	else if (dynamic_cast<C*>(p))
 		std::cout << "The Class is C" << std::endl;
+	else
+		std::cout << "Not A, B, C" << std::endl;
 }
 
 void	identify(Base &p)

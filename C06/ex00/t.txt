@@ -1,0 +1,1 @@
+The concept is that promotion casts (int to double) are accepted implicitly, while demotion casts (double to int) require explicit casting to ensure that the developer is aware of the potential data loss or truncation that might occur.

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <deque>
+#include <list>
 #include <cstdlib>
 #include <ctime>
 
@@ -16,9 +16,9 @@ class PmergeMe
     PmergeMe &operator=(const PmergeMe &rhs);
     ~PmergeMe();
     void merg_vector(std::vector<int>& vec, int left, int mid, int right);
-    void merg_deque(std::deque<int>& deq, int left, int mid, int right);
+    void merg_list(std::list<int>& left, std::list<int>& right, std::list<int>& result);
     void merg_sort_vector(std::vector<int>& arr, int l, int r);
-    void merg_sort_deque(std::deque<int>& arr, int l, int r);
+    void merg_sort_list(std::list<int>& lst);
 };
 
 #endif
