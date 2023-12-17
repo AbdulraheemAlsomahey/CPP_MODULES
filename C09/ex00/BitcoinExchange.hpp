@@ -17,8 +17,8 @@ class BitcoinExchange
     void	parseDates(std::string line);
     void	getDateAndPrint(std::string date, float val);
 
-    bool	readDataFile();
-    bool	calculate(std::string infile);
+    bool	fill_data_base();
+    bool	fill_input(std::string infile);
     bool	isValidDate(std::string	date);
     bool	isValidDelim(std::string	line);
     bool	isValidDMY(std::string year, std::string month, std::string day);
@@ -26,10 +26,10 @@ class BitcoinExchange
 
     public:
         BitcoinExchange();
-        BitcoinExchange(std::string	infile);
         BitcoinExchange(const BitcoinExchange &object);
         BitcoinExchange &operator=(const BitcoinExchange &rhs);
         ~BitcoinExchange();
+        void execute(std::string	infile);
 };
 
 #endif

@@ -4,7 +4,8 @@ int main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
-		BitcoinExchange exchgRate(argv[1]);
+		BitcoinExchange bit;
+		bit.execute(argv[1]);
 		return (0);
 	}
 	else

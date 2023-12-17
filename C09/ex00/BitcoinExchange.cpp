@@ -4,13 +4,6 @@ BitcoinExchange::BitcoinExchange()
 {
 }
 
-BitcoinExchange::BitcoinExchange(std::string infile)
-{
-if (!this->readDataFile())
-	return ;
-if (!this->calculate(infile))
-	return ;
-}
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &object)
 {
@@ -29,7 +22,16 @@ BitcoinExchange::~BitcoinExchange()
 {
 }
 
-bool	BitcoinExchange::readDataFile()
+void BitcoinExchange::execute(std::string infile)
+{
+	if (!this->fill_data_base())
+		return ;
+	if (!this->fill_input(infile))
+		return ;
+}
+
+
+bool	BitcoinExchange::fill_data_base()
 {
 std::ifstream	data("data.csv");
 std::string		line;
@@ -107,18 +109,18 @@ return (true);
 
 float		BitcoinExchange::isValidValue(std::string value)
 {
-float	val = atof(value.c_str());
-if (value.find("-") == 0)
-{
-	std::cout << "Error: not a positive number." << std::endl;
-	return (-1);
-}
-if (value.size() > 4 || val > 1000)
-{
-	std::cout << "Error: too large a number." << std::endl;
-	return (-1);
-}
-return (val);
+	float	val = atof(value.c_str());
+	if (value.find("-") == 0)
+	{
+		std::cout << "Error: not a positive number." << std::endl;
+		return (-1);
+	}
+	if (value.size() > 4 || val > 1000)
+	{
+		std::cout << "Error: too large a number." << std::endl;
+		return (-1);
+	}
+	return (val);
 }
 
 void	BitcoinExchange::getDateAndPrint(std::string date, float value)
@@ -152,13 +154,18 @@ float				val;
 
 str >> date >> delim >> value;
 
+if (date.find_first_not_of("0123456789 .-+*/") != std::string::npos || value.find_first_not_of("0123456789 .-+*/") != std::string::npos)
+{
+	std::cout << "Error : Not number" << std::endl;
+	return ;
+}
 val = this->isValidValue(value);
 if (!(this->isValidDate(date)) || !(this->isValidDelim(line)) || val == -1)
 	return ;
 this->getDateAndPrint(date, val);
 }
 
-bool	BitcoinExchange::calculate(std::string inf)
+bool	BitcoinExchange::fill_input(std::string inf)
 {
 std::ifstream	infile(inf.c_str());
 std::string		line;
